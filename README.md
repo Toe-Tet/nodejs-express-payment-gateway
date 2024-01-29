@@ -2,8 +2,8 @@
 
 ## Requirements
 
-**NodeJs Version:** ^16.0.0
-**Npm Version:** ^8.0.0
+**Minimum NodeJs Version:** ^16.0.0
+**Minimum Npm Version:** ^8.0.0
 
 ## Project setup
 
