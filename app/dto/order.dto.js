@@ -48,7 +48,7 @@ const orderDto = async (req, res, next) => {
 			next();
 		})
 		.catch((errors) => {
-			console.log(errors.errors, "...val err");
+			// console.log(errors.errors, "...val err");
 			return res.status(400).render("index", { errors });
 		});
 };

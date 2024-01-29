@@ -38,7 +38,7 @@ class BraintreeService extends PaymentInterface {
 
 			return new PaymentException("Braintree Payment Error", errors);
 		} catch (error) {
-			console.log(error, "..handle errors");
+			// console.log(error, "..handle errors");
 			return error;
 		}
 	}

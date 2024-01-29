@@ -59,7 +59,7 @@ const order = async (req, res) => {
 		} else {
 			errors = new InternalServerErrorException();
 		}
-		console.log(error, "...err");
+		// console.log(error, "...err");
 		return res.status(400).render("index", { errors });
 	}
 };
