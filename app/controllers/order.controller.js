@@ -2,6 +2,7 @@ const { Sequelize } = require("sequelize");
 const { transactionRepo, receiptRepo } = require("../models");
 const SequelizeValidationException = require("../exceptions/sequelize-validation.exception");
 const PaymentService = require("../services/payment/payment.service");
+const InternalServerErrorException = require("../exceptions/internal-server-error.exception");
 
 const index = (req, res) => {
 	return res.render("index");
@@ -47,18 +48,19 @@ const order = async (req, res) => {
 			transactionId: trans.id,
 		});
 
-		// console.log(trans, "....trans", receipt, "....receipt");
-
 		res.render("index", { success: true });
 	} catch (error) {
+		let errors;
 		if (error instanceof Sequelize.ValidationError) {
-			error = new SequelizeValidationException(
+			errors = new SequelizeValidationException(
 				"Sequelize Validation Error",
 				error
 			);
+		} else {
+			errors = new InternalServerErrorException();
 		}
 		console.log(error, "...err");
-		return res.status(400).render("index", { error });
+		return res.status(400).render("index", { errors });
 	}
 };
 
