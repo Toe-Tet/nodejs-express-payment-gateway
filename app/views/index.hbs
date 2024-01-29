@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/css/bootstrap.min.css"
+			integrity="sha512-b2QcS5SsA8tZodcDtGRELiGv5SaKSk1vDHDaQRda0htPYWZ6046lr3kJ5bAAQdpV2mmA/4v0wQF9MyU6/pDIAg=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer"
+		/>
+	</head>
+	<body>
+		<div class=" row w-100">
+            <div class="col-6">
+                <div class="card m-5">
+                    <div class="card-header">
+                        NodeJs Express Payment Gateway Library
+                    </div>
+                    <form action="/" method="POST">
+                        <div class="card-body">
+                            <h4 class="pb-2">Order Section</h4>
+                            <div class="control-group mb-2">
+                                <label class="control-label" for="amount"
+                                    >Amount</label
+                                >
+                                <div class="controls">
+                                    <input
+                                        type="text"
+                                        class="form-control w-50"
+                                        id="amount"
+                                        name="amount"
+                                    />
+                                </div>
+                            </div>
+                            <div class="control-group mb-2">
+                                <label class="control-label" for="currency"
+                                    >Currency</label
+                                >
+                                <div class="controls">
+                                    <select
+                                        id="currency"
+                                        name="currency"
+                                        class="form-control w-50"
+                                        required
+                                    >
+                                        <option value="USD">USD</option>
+                                        <option value="EUR">EUR</option>
+                                        <option value="THB">THB</option>
+                                        <option value="HKD">HKD</option>
+                                        <option value="SGD">SGD</option>
+                                        <option value="AUD">AUD</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="control-group mb-4">
+                                <label class="control-label" for="customerFullName"
+                                    >Customer Full Name</label
+                                >
+                                <div class="controls">
+                                    <input
+                                        type="text"
+                                        class="form-control w-50"
+                                        id="customerFullName"
+                                        name="customerFullName"
+                                    />
+                                </div>
+                            </div>
+
+                            <h4 class="pb-2">Payment Section</h4>
+                            <div class="control-group mb-2">
+                                <label class="control-label" for="cardHolderName"
+                                    >Credit Card Holder Name</label
+                                >
+                                <div class="controls">
+                                    <input
+                                        type="text"
+                                        class="form-control w-50"
+                                        id="cardHolderName"
+                                        name="cardHolderName"
+                                    />
+                                </div>
+                            </div>
+                            <div class="control-group mb-2">
+                                <label class="control-label" for="number"
+                                    >Credit Card Number</label
+                                >
+                                <div class="controls">
+                                    <input
+                                        type="text"
+                                        class="form-control w-50"
+                                        id="number"
+                                        name="number"
+                                    />
+                                </div>
+                            </div>
+                            <div class="control-group mb-2">
+                                <label class="control-label" for="expirationDate"
+                                    >Credit Card Expiration</label
+                                >
+                                <div class="controls">
+                                    <input
+                                        type="text"
+                                        class="form-control w-50"
+                                        id="expirationDate"
+                                        name="expirationDate"
+                                    />
+                                </div>
+                            </div>
+                            <div class="control-group mb-2">
+                                <label class="control-label" for="cardCvv"
+                                    >Credit Card CVV</label
+                                >
+                                <div class="controls">
+                                    <input
+                                        type="text"
+                                        class="form-control w-50"
+                                        id="cardCvv"
+                                        name="cardCvv"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-primary" type="submit">
+                                Submit
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-6">
+                {{#if success}}
+                <div class="alert alert-success m-5">
+                    <h4 class="alert-heading">Success !</h4>
+                    Your order transaction was completed!
+                </div>
+                {{else if errors}}
+                <div class="alert alert-danger m-5">
+                    <h4 class="alert-heading">Error !</h4>
+                    Your order transaction was not completed!
+
+                    <ul >
+                        {{#if errors }}
+                            {{#each errors.errors}}
+                                <li>{{this.message}}</li>
+                            {{/each}}
+                        {{/if}}
+                        {{!-- {{#if errors.base }}
+                            {{#each errors.base}}
+                                <li>{{this}}</li>
+                            {{/each}}
+                        {{/if}}
+                        {{#if errors.message }}
+                            {{#each errors.message}}
+                                <li>{{this}}</li>
+                            {{/each}}
+                        {{/if}} --}}
+                    </ul>
+                </div>
+                {{/if}}
+            </div>
+		</div>
+	</body>
+</html>
