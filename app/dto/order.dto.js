@@ -23,16 +23,16 @@ const {
 
 const orderDto = catchAsync(async (req, res, next) => {
 	await validate(req.body, {
-		// amount: [isRequireValidator, isNumericPositiveValidator],
-		// currency: [
-		// 	isRequireValidator,
-		// 	isInValidator(["USD", "EUR", "THB", "HKD", "SGD", "AUD"]),
-		// ],
-		// customerFullName: [isRequireValidator, isFullNameValidator],
-		// cardHolderName: [isRequireValidator, isCreditCardHolderNameValidator],
-		// number: [isRequireValidator, isCreditCardNumberValidator],
-		// expirationDate: [isRequireValidator, isCreditCardExpireValidator],
-		// cardCvv: [isRequireValidator, isCreditCardCvvValidator],
+		amount: [isRequireValidator, isNumericPositiveValidator],
+		currency: [
+			isRequireValidator,
+			isInValidator(["USD", "EUR", "THB", "HKD", "SGD", "AUD"]),
+		],
+		customerFullName: [isRequireValidator, isFullNameValidator],
+		cardHolderName: [isRequireValidator, isCreditCardHolderNameValidator],
+		number: [isRequireValidator, isCreditCardNumberValidator],
+		expirationDate: [isRequireValidator, isCreditCardExpireValidator],
+		cardCvv: [isRequireValidator, isCreditCardCvvValidator],
 	});
 
 	req.body = extractObject(req.body, [

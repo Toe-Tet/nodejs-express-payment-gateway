@@ -1,8 +1,11 @@
 const isNumericPositiveValidator = (value) => {
-	// console.log(value, "...check validator");
-	if (isNaN(value) || parseFloat(value) <= 0) {
-		return "The :property must be a numeric value greater than zero";
+	if (value) {
+		// console.log(value, "...check validator");
+		if (isNaN(value) || parseFloat(value) <= 0) {
+			return "The :property must be a numeric value greater than zero";
+		}
 	}
+
 	return true;
 };
 

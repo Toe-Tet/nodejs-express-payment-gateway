@@ -1,7 +1,4 @@
-const { Sequelize } = require("sequelize");
-const { transactionRepo, receiptRepo } = require("../models");
-const SequelizeValidationException = require("../exceptions/sequelize-validation.exception");
-const PaymentService = require("../services/payment/payment.service");
+const { transactionRepo } = require("../models");
 
 jest.mock("../models"); // Mock the Sequelize models
 
@@ -42,7 +39,7 @@ jest.mock("../services/payment/payment.service", () => {
 	});
 });
 
-const { index, order } = require("./order.controller.js"); // Adjust the path
+const { index, order } = require("./order.controller.js");
 
 describe("Order Controller Tests", () => {
 	beforeEach(() => {
@@ -109,38 +106,8 @@ describe("Order Controller Tests", () => {
 				masterMerchantAccountId: null,
 				orderId: null,
 			});
-			// expect(receiptRepo.create).toHaveBeenCalledWith({
-			// 	id: 1,
-			// 	processorResponseCode: "1000",
-			// 	processorResponseText: "Approved",
-			// 	processorAuthorizationCode: "0ST1HL",
-			// 	type: "sale",
-			// 	pinVerified: false,
-			// 	processingMode: null,
-			// 	networkIdentificationCode: null,
-			// 	cardType: "Visa",
-			// 	cardLast4: "1111",
-			// 	accountBalance: null,
-			// 	transactionId: 1,
-			// });
-			// console.log(renderMock, "...render mock");
+
 			expect(renderMock).toHaveBeenCalledWith("index", { success: true });
 		});
-
-		// it('should handle a validation error', async () => {
-		//   const req = { body: {/* mock request body data */ } };
-		//   const res = { render: jest.fn(), status: jest.fn().mockReturnThis() };
-
-		//   // Mock Sequelize validation error
-		//   const validationError = new Sequelize.ValidationError();
-		//   transactionRepo.create.mockRejectedValue(validationError);
-
-		//   await order(req, res);
-
-		//   expect(res.status).toHaveBeenCalledWith(400);
-		//   expect(res.render).toHaveBeenCalledWith("index", { error: /* your error mock */ });
-		// });
-
-		// Add more tests for other scenarios (e.g., error handling, edge cases)
 	});
 });

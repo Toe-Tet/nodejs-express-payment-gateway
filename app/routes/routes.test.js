@@ -8,10 +8,7 @@ describe("Routes", () => {
 	});
 
 	it('should handle POST request to "/" with invalid data', async () => {
-		const invalidOrderData = {};
-
-		const response = await request(app).post("/").send(invalidOrderData);
-
+		const response = await request(app).post("/").send({});
 		expect(response.status).toBe(400);
 	});
 });
