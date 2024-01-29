@@ -19,10 +19,6 @@ class PaypalService extends PaymentInterface {
 	handleResult(result) {
 		return;
 	}
-
-	async sale(transactionParams) {
-		return;
-	}
 }
 
 module.exports = PaypalService;

@@ -21,26 +21,21 @@ class BraintreeService extends PaymentInterface {
 	}
 
 	handleErrors(result) {
-		const errors = {};
-		try {
-			const transactionValidationErrors =
-				result.errors.errorCollections.transaction.validationErrors;
-			Object.keys(transactionValidationErrors).forEach((key) => {
-				errors[key] = transactionValidationErrors[key];
-			});
+		const errors = [];
+		const transactionValidationErrors =
+			result.errors.errorCollections.transaction.validationErrors;
+		Object.keys(transactionValidationErrors).forEach((key) => {
+			errors.push(transactionValidationErrors[key]);
+		});
 
-			const creditCardValidationErrors =
-				result.errors.errorCollections.transaction.errorCollections
-					.creditCard.validationErrors;
-			Object.keys(creditCardValidationErrors).forEach((key) => {
-				errors[key] = creditCardValidationErrors[key];
-			});
+		const creditCardValidationErrors =
+			result.errors.errorCollections.transaction.errorCollections
+				.creditCard.validationErrors;
+		Object.keys(creditCardValidationErrors).forEach((key) => {
+			errors.push(creditCardValidationErrors[key][0]);
+		});
 
-			return new PaymentException("Braintree Payment Error", errors);
-		} catch (error) {
-			// console.log(error, "..handle errors");
-			return error;
-		}
+		return new PaymentException("Braintree Payment Error", errors);
 	}
 
 	handleResult(result) {
@@ -76,30 +71,26 @@ class BraintreeService extends PaymentInterface {
 	}
 
 	async sale(transactionParams, currency) {
-		try {
-			const transaction = {
-				...transactionParams,
-				merchantAccountId: this.currencies[currency],
-			};
+		const transaction = {
+			...transactionParams,
+			merchantAccountId: this.currencies[currency],
+		};
 
-			return new Promise((resolve, reject) => {
-				this.gatewayBraintree.transaction.sale(
-					transaction,
-					(err, result) => {
-						if (result) {
-							if (result.success) {
-								resolve(this.handleResult(result));
-							} else {
-								reject(this.handleErrors(result));
-							}
+		return new Promise((resolve, reject) => {
+			this.gatewayBraintree.transaction.sale(
+				transaction,
+				(err, result) => {
+					if (result) {
+						if (result.success) {
+							resolve(this.handleResult(result));
+						} else {
+							reject(this.handleErrors(result));
 						}
-						reject({ message: ["Transaction got an error"] });
 					}
-				);
-			});
-		} catch (error) {
-			throw error;
-		}
+					reject(new PaymentException("Braintree Payment Error"));
+				}
+			);
+		});
 	}
 }
 

@@ -1,4 +1,4 @@
-const ValidationException = require("../exceptions/validation.exception");
+const ValidationErrorException = require("../exceptions/validation-error.exception");
 const {
 	convertCamelCaseToSpaces,
 	isObjectNotEmpty,
@@ -27,7 +27,7 @@ const validate = async (body, rules) => {
 		});
 
 		if (isObjectNotEmpty(errors)) {
-			reject(new ValidationException("Validation Error", errors));
+			reject(new ValidationErrorException("Validation Error", errors));
 		}
 
 		resolve(true);

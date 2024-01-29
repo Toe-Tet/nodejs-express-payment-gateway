@@ -1,4 +1,4 @@
-const { extractObject } = require("../utils/helper.js");
+const { extractObject, catchAsync } = require("../utils/helper.js");
 const {
 	isNumericPositiveValidator,
 } = require("../validators/is-numeric-positive.validator.js");
@@ -21,37 +21,32 @@ const {
 	isCreditCardCvvValidator,
 } = require("../validators/is-credit-card-cvv.validator.js");
 
-const orderDto = async (req, res, next) => {
-	validate(req.body, {
-		amount: [isRequireValidator, isNumericPositiveValidator],
-		currency: [
-			isRequireValidator,
-			isInValidator(["USD", "EUR", "THB", "HKD", "SGD", "AUD"]),
-		],
-		customerFullName: [isRequireValidator, isFullNameValidator],
-		cardHolderName: [isRequireValidator, isCreditCardHolderNameValidator],
-		number: [isRequireValidator, isCreditCardNumberValidator],
-		expirationDate: [isRequireValidator, isCreditCardExpireValidator],
-		cardCvv: [isRequireValidator, isCreditCardCvvValidator],
-	})
-		.then(() => {
-			req.body = extractObject(req.body, [
-				"amount",
-				"currency",
-				"customerFullName",
-				"cardHolderName",
-				"number",
-				"expirationDate",
-				"cardCvv",
-			]);
+const orderDto = catchAsync(async (req, res, next) => {
+	await validate(req.body, {
+		// amount: [isRequireValidator, isNumericPositiveValidator],
+		// currency: [
+		// 	isRequireValidator,
+		// 	isInValidator(["USD", "EUR", "THB", "HKD", "SGD", "AUD"]),
+		// ],
+		// customerFullName: [isRequireValidator, isFullNameValidator],
+		// cardHolderName: [isRequireValidator, isCreditCardHolderNameValidator],
+		// number: [isRequireValidator, isCreditCardNumberValidator],
+		// expirationDate: [isRequireValidator, isCreditCardExpireValidator],
+		// cardCvv: [isRequireValidator, isCreditCardCvvValidator],
+	});
 
-			next();
-		})
-		.catch((errors) => {
-			// console.log(errors.errors, "...val err");
-			return res.status(400).render("index", { errors });
-		});
-};
+	req.body = extractObject(req.body, [
+		"amount",
+		"currency",
+		"customerFullName",
+		"cardHolderName",
+		"number",
+		"expirationDate",
+		"cardCvv",
+	]);
+
+	next();
+});
 
 module.exports = {
 	orderDto,

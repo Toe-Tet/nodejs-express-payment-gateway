@@ -15,8 +15,19 @@ const convertCamelCaseToSpaces = (inputString) => {
 		.toLowerCase();
 };
 
+const catchAsync = (handler) => {
+	return (req, res, next) => {
+		console.log("...catchAsync...");
+		handler(req, res, next).catch((err) => {
+			console.log("...catchAsync...error");
+			next(err);
+		});
+	};
+};
+
 module.exports = {
 	extractObject,
 	isObjectNotEmpty,
 	convertCamelCaseToSpaces,
+	catchAsync,
 };
