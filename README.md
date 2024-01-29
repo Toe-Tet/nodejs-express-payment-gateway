@@ -1,5 +1,10 @@
 # Node.js Express Payment Gateway
 
+## Requirements
+
+**NodeJs Version:** ^16.0.0
+**Npm Version:** ^8.0.0
+
 ## Project setup
 
 Copy the `.env.example` file to `.env` and fill in the required values
