@@ -16,10 +16,11 @@ const convertCamelCaseToSpaces = (inputString) => {
 };
 
 const catchAsync = (handler) => {
+	console.log("....catch async");
 	return (req, res, next) => {
-		// console.log("...catchAsync...");
+		console.log("....catch async run");
 		handler(req, res, next).catch((err) => {
-			// console.log("...catchAsync...error");
+			console.log(err, "....catch async error");
 			next(err);
 		});
 	};
