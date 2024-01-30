@@ -1,22 +1,6 @@
-// const PaymentService = require("../services/payment/payment.service.js");
-const { catchAsync } = require("../utils/helper.js");
+const { transactionRepo } = require("../models/index.js");
 
-// Mock the Sequelize models
-// jest.mock("../models", () => {
-// 	return jest.fn().mockImplementation(() => {
-// 		return {
-// 			transactionRepo: jest.fn().mockReturnThis(),
-// 			receiptRepo: jest.fn().mockReturnThis(),
-// 			create: jest.fn().mockResolvedValue({
-// 				id: 1,
-// 			}),
-// 		};
-// 	});
-// });
-
-// Assuming your Sequelize setup and models are defined in a separate module
-// const { sequelize, transactionRepo, receiptRepo } = require("../models");
-
+jest.useFakeTimers();
 // Mock Sequelize models
 jest.mock("../models/transaction.model.js", () => {
 	return jest.fn().mockImplementation(() => {
@@ -58,6 +42,11 @@ jest.mock("../services/payment/payment.service.js", () => {
 const { index, order } = require("./order.controller.js");
 
 describe("Order Controller Tests", () => {
+	beforeEach(() => {
+		// Clear the mock calls before each test
+		jest.clearAllMocks();
+	});
+
 	describe("index", () => {
 		it("should render the index page", () => {
 			const renderMock = jest.fn();
@@ -96,7 +85,34 @@ describe("Order Controller Tests", () => {
 				expect(renderMock).toHaveBeenCalledWith("index", {
 					success: true,
 				});
-			}, 1000);
+			}, 2000);
+		});
+
+		it("should handle an error", async () => {
+			const req = {
+				body: {
+					amount: "100",
+					currency: "THB",
+					customerFullName: "Kyaw Kyaw",
+					cardHolderName: "Kyaw Kyaw",
+					number: "4111111111111111",
+					expirationDate: "05/2021",
+					cardCvv: "11",
+				},
+			};
+
+			// Mock the transactionRepo.create to throw an error
+			transactionRepo.create.mockRejectedValue(
+				new Error("Simulated Sequelize Error")
+			);
+
+			const nextMock = jest.fn();
+
+			setTimeout(() => {
+				expect(order(req, {}, nextMock)).rejects.toThrow(
+					"Simulated Sequelize Error"
+				);
+			}, 2000);
 		});
 	});
 });
