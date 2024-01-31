@@ -75,7 +75,7 @@ class BraintreeService extends PaymentInterface {
 			...transactionParams,
 			merchantAccountId: this.currencies[currency],
 		};
-		console.log("....sale...");
+
 		return new Promise((resolve, reject) => {
 			this.gatewayBraintree.transaction.sale(
 				transaction,
